@@ -189,7 +189,7 @@ namespace hpp
 
 
       // ---------------------------------------------------------------
-
+      
       bool Problem::createOrientationConstraint
       (const char* constraintName, const char* joint1Name,
        const char* joint2Name, const Double* p) throw (hpp::Error)
