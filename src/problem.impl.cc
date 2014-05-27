@@ -190,17 +190,16 @@ namespace hpp
 
       // ---------------------------------------------------------------
       
-      bool Problem::createOrientationConstraint(
-				const char* constraintName, const char* joint1Name,
-				const char* joint2Name, const hpp::floatSeq& angles
-			) throw (hpp::Error)
+      bool Problem::createOrientationConstraint
+      (const char* constraintName, const char* joint1Name,
+       const char* joint2Name, const Double* p) throw (hpp::Error)
       {
-
-			JointPtr_t joint1;
-			JointPtr_t joint2;
-			size_type constrainedJoint = 0;
-			hpp::model::matrix3_t rotation;
-			rotation.setEulerZYX(angles[0], angles[1], angles[2]);
+	JointPtr_t joint1;
+	JointPtr_t joint2;
+	size_type constrainedJoint = 0;
+	fcl::Quaternion3f quat (p [0], p [1], p [2], p [3]);
+	hpp::model::matrix3_t rotation;
+	quat.toRotation (rotation);
 
 	try {
 	  // Test whether joint1 is world frame
@@ -239,8 +238,8 @@ namespace hpp
       }
 
       // ---------------------------------------------------------------
-     
- 
+
+
       bool Problem::createPositionConstraint
       (const char* constraintName, const char* joint1Name,
        const char* joint2Name, const hpp::floatSeq& point1,
