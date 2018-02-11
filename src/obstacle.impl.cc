@@ -19,6 +19,7 @@
 #include <hpp/util/exception-factory.hh>
 
 #include <hpp/fcl/BVH/BVH_model.h>
+#include <hpp/fcl/BV/AABB.h>
 #include <hpp/fcl/shape/geometric_shapes.h>
 
 #include <hpp/pinocchio/device.hh>
@@ -221,6 +222,26 @@ namespace hpp
 	  ++i;
 	}
 	return result;
+      }
+
+      // --------------------------------------------------------------------
+
+      hpp::floatSeq* Obstacle::getObstacleAABB (const char* objectName)
+	throw (hpp::Error)
+      {
+        try {
+          CollisionObjectPtr_t object = getObstacleByName (objectName);
+          if (object) {
+            const fcl::AABB& aabb (object->fcl ()->getAABB ());
+            vector_t res (6);
+            res.head <3> () = aabb.min_;
+            res.tail <3> () = aabb.max_;
+            return vectorToFloatSeq (res);
+          }
+          HPP_THROW(Error, "Object " << objectName << " not found");
+        } catch (const std::exception& exc) {
+          throw (hpp::Error (exc.what ()));
+        }
       }
 
       void Obstacle::createPolyhedron

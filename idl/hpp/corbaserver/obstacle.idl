@@ -98,6 +98,13 @@ module hpp
     Names_t getObstacleNames (in boolean collision, in boolean distance)
       raises (Error);
 
+    /// Get Axis Aligned Bounding Box of obstacles
+    /// \param objectName name of object
+    ///
+    /// Return 6 float (xmin, ymin, zmin, xmax, ymax, zmax) corresponding to
+    /// bounding box of collision geometry.
+    /// \note does not take into account position of the object.
+    floatSeq getObstacleAABB (in string objectName) raises (Error);
     /// \}
 
     /// \name Polyhedra

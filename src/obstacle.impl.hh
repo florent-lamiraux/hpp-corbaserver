@@ -59,7 +59,10 @@ namespace hpp
 	virtual Names_t* getObstacleNames (bool collision, bool distance)
 	  throw (hpp::Error);
 
-	virtual void
+        virtual hpp::floatSeq* getObstacleAABB (const char* objectName)
+          throw (hpp::Error);
+
+        virtual void
 	createPolyhedron (const char* polyhedronName)
 	  throw (hpp::Error);
 
